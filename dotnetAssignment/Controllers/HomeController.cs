@@ -14,15 +14,24 @@ namespace dotnetAssignment.Controllers
             _touristPlaceRepository = touristPlaceRepository;
             this.webHostEnvironment = webHostEnvironment;
         }
-        public ViewResult Index()
+        public ViewResult Index(string? searchString)
         {
-            AllTouristPlaces touristPlaces = new AllTouristPlaces()
+            var places = _touristPlaceRepository.GettAll();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                places = places
+                    .Where(p => p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            return View(new AllTouristPlaces
             {
                 Title = "All tourist places",
-                touristPlaces = _touristPlaceRepository.GettAll()
-            };
-            return View(touristPlaces);
+                touristPlaces = places
+            });
         }
+
         [HttpGet]
         public ViewResult AddNewTouristPlace()
         {
