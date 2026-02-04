@@ -1,0 +1,110 @@
+﻿@model TouristPlaceCreateModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+
+@section StylesAndTitle {
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Title</title>
+    <link href="~/css/AddNewTouristPlace.css" rel="stylesheet" />
+}
+
+
+<form asp-controller="home" asp-action="AddNewTouristPlace" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <h2 class="text-center page-title">@Model.Title</h2>
+
+                <!-- Name -->
+                <div class="row mb-4 align-items-center">
+                    <div class="col-auto label-col">
+                        <label asp-for="Name" class="form-label label-text mb-0"></label>
+                    </div>
+                    <div class="col input-col">
+                        <input type="text" asp-for="Name" class="form-control field-input">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-auto side-col"></div>
+                </div>
+
+                <!-- Address -->
+                <div class="row mb-4 align-items-center">
+                    <div class="col-auto label-col">
+                        <label asp-for="Address" class="form-label label-text mb-0"></label>
+                    </div>
+                    <div class="col input-col">
+                        <input type="text" asp-for="Address" class="form-control field-input">
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="col-auto side-col"></div>
+                </div>
+
+                <!-- Rating -->
+                <div class="row mb-4 align-items-center">
+                    <div class="col-auto label-col">
+                        <label asp-for="Rating" class="form-label label-text mb-0"></label>
+                    </div>
+                    <div class="col input-col">
+                        <input type="number" asp-for="Rating" class="form-control field-input" min="1" max="5">
+                    </div>
+                    <div class="col-auto side-col">
+                        <span class="range-label">Range 1 to 5</span>
+                    </div>
+                </div>
+
+                <!-- Type -->
+                <div class="row mb-4 align-items-start">
+                    <div class="col-auto label-col">
+                        <label asp-for="Type" class="form-label label-text mb-0 mt-1"></label>
+                    </div>
+                    <div class="col input-col">
+                        <select asp-for="Type" class="form-select field-input" asp-items="Html.GetEnumSelectList<PlaceType>()">
+                            <option value=""> Please Select </option>
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                    <div class="col-auto side-col"></div>
+                </div>
+
+
+                <!-- Picture -->
+                <div class="row mb-4 align-items-center">
+                    <div class="col-auto label-col">
+                        <label asp-for="Photo" class="form-label label-text mb-0"></label>
+                    </div>
+                    <div class="col input-col">
+                        <div class="picture-box">
+                            <input type="file" asp-for="Photo" class="form-control form-control-sm file-input">
+                        </div>
+                    </div>
+                    <div class="col-auto side-col"></div>
+                </div>
+
+                <div asp-validation-summary="All"></div>
+
+                <!-- Buttons -->
+                <div class="row justify-content-center mb-3">
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary btn-submit-green me-2">Submit</button>
+                        <button type="reset" class="btn btn-primary btn-reset-orange">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Back Link -->
+                <div class="row">
+                    <div class="col-12 text-end">
+                        <a asp-controller="Home" asp-action="Index" class="back-link">
+                            Back to Tourist Place List
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+

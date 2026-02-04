@@ -1,0 +1,70 @@
+﻿@model AllTouristPlaces
+@{
+    ViewBag.Title = "Tourist Place List";
+}
+
+@section StylesAndTitle {
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Place List</title>
+    <link href="~/css/Index.css" rel="stylesheet" />
+}
+
+<div class="container-fluid px-4 pt-4">
+
+    <!-- Search Box -->
+    <div class="row">
+        <div class="col-auto">
+            <input type="text" class="form-control search-input" placeholder="Enter name to search">
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table list-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>ADDRESS</th>
+                            <th>RATING</th>
+                            <th>PICTURE</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var touristPlace in @Model.touristPlaces)
+                        {
+                            
+                            var photoPath = Url.Content("~/images/" + (touristPlace.PhotoPath ?? "noimage.jpg"));
+                            
+                            <tr>
+                                <td>@touristPlace.Name</td>
+                                <td>@touristPlace.Address</td>
+                                <td>@touristPlace.Rating</td>
+                                <td class="pic-td">
+                                    <img src="@photoPath" asp-append-version="true" alt="Picture" class="place-picture">
+                                </td>
+                                <td class="action-td">
+                                    <a asp-controller="Home" asp-action="UpdateTouristPlace" asp-route-id="@touristPlace.Id" class="btn btn-update">Update</a>
+                                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@touristPlace.Id" class="btn btn-delete">Delete</a>
+                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@touristPlace.Id" class="btn btn-create">Details</a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create New Tourist Place -->
+    <div class="row mt-3">
+        <div class="col-auto">
+            <a asp-controller="Home" asp-action="AddNewTouristPlace" class="btn btn-create">Create New Tourist Place</a>
+        </div>
+    </div>
+
+</div>
+

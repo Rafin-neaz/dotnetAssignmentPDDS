@@ -1,0 +1,92 @@
+﻿@model TouristPlaceViewModel
+
+@{
+    ViewBag.Title = "Details of Tourist Place";
+    var photoPath = Url.Content("~/images/" + (Model.TouristPlace.PhotoPath ?? "noimage.jpg"));
+}
+
+
+@section StylesAndTitle {
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details of Tourist Place</title>
+    <link href="~/css/Details.css" rel="stylesheet" />
+}
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <h2 class="text-center page-title">Tourist Place Details</h2>
+
+            <!-- Name -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-auto label-col">
+                    <label class="detail-label">Name:</label>
+                </div>
+                <div class="col detail-col">
+                    <span class="detail-value">@Model.TouristPlace.Name</span>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-auto label-col">
+                    <label class="detail-label">Address:</label>
+                </div>
+                <div class="col detail-col">
+                    <span class="detail-value">@Model.TouristPlace.Address</span>
+                </div>
+            </div>
+
+            <!-- Rating -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-auto label-col">
+                    <label class="detail-label">Rating:</label>
+                </div>
+                <div class="col detail-col">
+                    <span class="detail-value">@Model.TouristPlace.Rating</span>
+                    <span class="rating-stars">★★★★☆</span>
+                </div>
+            </div>
+
+            <!-- Type -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-auto label-col">
+                    <label class="detail-label">Type:</label>
+                </div>
+                <div class="col detail-col">
+                    <span class="detail-value type-badge">@Model.TouristPlace.Type</span>
+                </div>
+            </div>
+
+            <!-- Picture -->
+            <div class="row mb-4 align-items-start">
+                <div class="col-auto label-col">
+                    <label class="detail-label">Picture:</label>
+                </div>
+                <div class="col detail-col">
+                    <div class="picture-box">
+                        <img src="@photoPath" asp-append-version="true" alt="Lalbagh Fort" class="detail-picture">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="row mt-4 mb-3">
+                <div class="col-12 d-flex justify-content-center gap-3">
+                    <a href="#" class="btn btn-update-blue">Update</a>
+                    <a href="#" class="btn btn-delete-red">Delete</a>
+                </div>
+            </div>
+
+            <!-- Back Link -->
+            <div class="row mt-3">
+                <div class="col-12 text-end">
+                    <a asp-controller="home" asp-action="index" class="back-link">Back to Tourist Place List</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

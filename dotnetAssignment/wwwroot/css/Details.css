@@ -1,0 +1,129 @@
+﻿body {
+    background-color: #fff;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* Page title */
+.page-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 38px;
+    margin-top: 8px;
+}
+
+/* Label column - right aligned, same width as page 1 */
+.label-col {
+    width: 150px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.detail-label {
+    font-size: 15px;
+    color: #000;
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+/* Value column */
+.detail-col {
+    max-width: 460px;
+}
+
+/* Detail value box - gray background like page 1 inputs */
+.detail-value {
+    display: inline-block;
+    background-color: #ececec;
+    border: 1px solid #d4d4d4;
+    border-radius: 2px;
+    min-width: 200px;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 12px;
+    font-size: 14px;
+    color: #000;
+}
+
+/* Rating stars */
+.rating-stars {
+    font-size: 18px;
+    color: #f0ad4e;
+    margin-left: 12px;
+    letter-spacing: 2px;
+}
+
+/* Type badge */
+.type-badge {
+    background-color: #5b9bd5 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 0 16px !important;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Picture box */
+.picture-box {
+    border: 2px solid #d4d4d4;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #fff;
+    display: inline-block;
+}
+
+.detail-picture {
+    display: block;
+    max-width: 300px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+/* Update blue button */
+.btn-update-blue {
+    background-color: #5b9bd5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+    .btn-update-blue:hover {
+        background-color: #4a8ac4;
+        color: #fff;
+    }
+
+/* Delete red button */
+.btn-delete-red {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+    .btn-delete-red:hover {
+        background-color: #c82333;
+        color: #fff;
+    }
+
+/* Back link */
+.back-link {
+    color: #0066cc;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+    .back-link:hover {
+        color: #004499;
+    }

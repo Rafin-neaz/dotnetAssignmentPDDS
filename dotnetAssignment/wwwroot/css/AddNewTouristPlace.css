@@ -1,0 +1,129 @@
+﻿body {
+    background-color: #fff;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 38px;
+    margin-top: 8px;
+}
+
+.label-col {
+    width: 150px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.label-text {
+    font-size: 15px;
+    color: #000;
+    font-weight: normal;
+}
+
+.input-col {
+    max-width: 460px;
+}
+
+.side-col {
+    width: 130px;
+}
+
+/* Gray background inputs */
+.field-input {
+    background-color: #ececec;
+    border: 1px solid #d4d4d4;
+    border-radius: 2px;
+    height: 34px;
+    font-size: 14px;
+    color: #000;
+    padding: 4px 10px;
+    box-shadow: none;
+}
+
+    .field-input:focus {
+        background-color: #ececec;
+        border-color: #b0b0b0;
+        box-shadow: none;
+    }
+
+/* Range 1 to 5 red bold */
+.range-label {
+    color: #e00000;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Type options list */
+.type-list {
+    font-size: 14px;
+    color: #000;
+    line-height: 1.7;
+}
+
+/* Picture red border box */
+.picture-box {
+    border: 2px solid #e84040;
+    border-radius: 3px;
+    padding: 6px 8px;
+    background-color: #fff;
+}
+
+.file-input {
+    border: none;
+    background-color: transparent;
+    font-size: 13px;
+    color: #000;
+    padding: 2px 0;
+}
+
+    .file-input:focus {
+        box-shadow: none;
+        border: none;
+    }
+
+/* Submit green button */
+.btn-submit-green {
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .btn-submit-green:hover {
+        background-color: #4cae4c;
+    }
+
+/* Reset orange button */
+.btn-reset-orange {
+    background-color: #f0ad4e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .btn-reset-orange:hover {
+        background-color: #ec9d3e;
+    }
+
+/* Back link right aligned */
+.back-link {
+    color: #0066cc;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+    .back-link:hover {
+        color: #004499;
+    }

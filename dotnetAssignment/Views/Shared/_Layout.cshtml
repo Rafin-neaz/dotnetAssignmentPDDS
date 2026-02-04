@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    @* <environment include="Develoment">
+        <link href="~/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    </environment> *@
+
+    <environment include="Development">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+            rel="stylesheet" 
+              @* integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+               asp-fallback-href="~/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute"
+              asp-suppress-fallback-integrity="true"  *@
+              />
+
+    </environment>
+    
+    @if (IsSectionDefined("StylesAndTitle"))
+    {
+        @RenderSection("StylesAndTitle", required: false)
+    }
+   
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    @if (IsSectionDefined("Scripts"))
+    {
+        @RenderSection("Scripts", required: false)
+    }
+</body>
+</html>

@@ -1,0 +1,104 @@
+####################################
+# Build results
+####################################
+bin/
+obj/
+out/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+
+####################################
+# ASP.NET Core
+####################################
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+####################################
+# Logs
+####################################
+*.log
+logs/
+log/
+
+####################################
+# User-specific files
+####################################
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+####################################
+# Visual Studio
+####################################
+.vs/
+.vscode/
+.idea/
+_ReSharper*/
+*.DotSettings.user
+
+####################################
+# Rider
+####################################
+.idea/
+
+####################################
+# OS files
+####################################
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+####################################
+# Node / Frontend (Bootstrap, npm, yarn)
+####################################
+node_modules/
+wwwroot/lib/
+wwwroot/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+####################################
+# Bootstrap (if manually added)
+####################################
+wwwroot/bootstrap/
+wwwroot/css/bootstrap*
+wwwroot/js/bootstrap*
+
+####################################
+# Package managers
+####################################
+packages/
+*.nupkg
+.nuget/
+.nuget/packages/
+
+####################################
+# Publishing
+####################################
+publish/
+*.Publish.xml
+*.pubxml
+*.pubxml.user
+
+####################################
+# Temporary / backup files
+####################################
+*.tmp
+*.bak
+*.old
+*.swp
+
+####################################
+# Database files (local dev only)
+####################################
+*.mdf
+*.ldf
+*.slnx
+
