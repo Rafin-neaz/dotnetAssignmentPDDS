@@ -112,16 +112,13 @@
 
 @section Scripts {
     <script>
-        // Current state
+
         let currentSearch = '@currentSearch';
         let currentSort = '@currentSort';
-
-        // Search-as-you-type functionality
         let searchTimeout;
         const searchInput = document.getElementById('searchInput');
         const ratingHeader = document.getElementById('ratingHeader');
 
-        // Navigate with current parameters
         function navigateWithParams(search, sort) {
             const url = new URL(window.location.origin + '@Url.Action("Index", "Home")');
             if (search) {
@@ -133,15 +130,14 @@
             window.location.href = url.toString();
         }
 
-        // Search input event listener with debounce
         searchInput.addEventListener('input', function() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(function() {
                 navigateWithParams(searchInput.value, currentSort);
-            }, 500); // 500ms debounce
+            }, 500); 
         });
 
-        // Allow immediate search on Enter key
+
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 clearTimeout(searchTimeout);
@@ -149,11 +145,10 @@
             }
         });
 
-        // Rating column header click for sorting
+
         ratingHeader.addEventListener('click', function() {
             let newSort;
 
-            // Cycle through: none → asc → desc → none
             if (currentSort === 'none' || currentSort === '') {
                 newSort = 'asc';
             } else if (currentSort === 'asc') {

@@ -19,7 +19,6 @@ namespace dotnetAssignment.Controllers
         {
             var places = _touristPlaceRepository.GettAll();
 
-            // Apply search filter
             if (!string.IsNullOrWhiteSpace(searchString))
             {
                 places = places
@@ -27,7 +26,6 @@ namespace dotnetAssignment.Controllers
                     .ToList();
             }
 
-            // Apply sorting
             if (!string.IsNullOrEmpty(sortOrder))
             {
                 switch (sortOrder.ToLower())
@@ -38,13 +36,11 @@ namespace dotnetAssignment.Controllers
                     case "desc":
                         places = places.OrderByDescending(p => p.Rating).ToList();
                         break;
-                    default: // "none" or any other value
-                        // Keep original order (no sorting)
+                    default: 
                         break;
                 }
             }
 
-            // Store current filter/sort in ViewBag for state retention
             ViewBag.CurrentSearch = searchString;
             ViewBag.CurrentSort = sortOrder;
 
@@ -61,7 +57,6 @@ namespace dotnetAssignment.Controllers
             TouristPlaceCreateModel model = new TouristPlaceCreateModel();
             model.Title = "Add New Tourist Place";
 
-            // Store state for return
             ViewBag.CurrentSearch = searchString;
             ViewBag.CurrentSort = sortOrder;
 
@@ -91,7 +86,7 @@ namespace dotnetAssignment.Controllers
                     filePath = Path.Combine(uploadsFolder, uniqueFileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        placeCreate.Photo.CopyTo(stream); // writes file
+                        placeCreate.Photo.CopyTo(stream); 
                     }
                 }
                 else if (placeCreate.ExistingPhotoPath != null)
@@ -120,7 +115,6 @@ namespace dotnetAssignment.Controllers
                 return RedirectToAction("details", new { id = UpdatedTouristPlace.Id, searchString = searchString, sortOrder = sortOrder });
             }
 
-            // Store state for return
             ViewBag.CurrentSearch = searchString;
             ViewBag.CurrentSort = sortOrder;
 
@@ -135,23 +129,24 @@ namespace dotnetAssignment.Controllers
             var filePath = Path.Combine(webHostEnvironment.WebRootPath, PhotoPath);
 
             TouristPlaceCreateModel touristPlaceCreateModel = new TouristPlaceCreateModel();
+            FormFile formFile;
             using (var stream = new FileStream(filePath, FileMode.Open))
             {
-                var formFile = new FormFile(stream, 0, stream.Length, "Photo", Path.GetFileName(filePath));
-                touristPlaceCreateModel = new TouristPlaceCreateModel()
-                {
-                    Id = place.Id,
-                    Name = place.Name,
-                    Address = place.Address,
-                    Rating = place.Rating,
-                    Type = place.Type,
-                    Photo = formFile,
-                    Title = "Update Tourist Place",
-                    ExistingPhotoPath = place.PhotoPath
-                };
+                formFile = new FormFile(stream, 0, stream.Length, "Photo", Path.GetFileName(filePath));
             }
 
-            // Store state for return
+            touristPlaceCreateModel = new TouristPlaceCreateModel()
+            {
+                Id = place.Id,
+                Name = place.Name,
+                Address = place.Address,
+                Rating = place.Rating,
+                Type = place.Type,
+                Photo = formFile,
+                Title = "Update Tourist Place",
+                ExistingPhotoPath = place.PhotoPath
+            };
+
             ViewBag.CurrentSearch = searchString;
             ViewBag.CurrentSort = sortOrder;
 
@@ -172,7 +167,6 @@ namespace dotnetAssignment.Controllers
                 TouristPlace = _touristPlaceRepository.Get(id)
             };
 
-            // Store state for return
             ViewBag.CurrentSearch = searchString;
             ViewBag.CurrentSort = sortOrder;
 
