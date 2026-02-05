@@ -4,6 +4,7 @@
     ViewBag.Title = Model.Title;
     var currentSearch = ViewBag.CurrentSearch as string ?? "";
     var currentSort = ViewBag.CurrentSort as string ?? "none";
+    var photoPath = Url.Content("~/images/" + (Model.ExistingPhotoPath ?? "noimage.jpg"));
 }
 
 
@@ -17,6 +18,7 @@
 <form asp-controller="home" asp-action="AddNewTouristPlace" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
     <input type="hidden" name="searchString" value="@currentSearch" />
     <input type="hidden" name="sortOrder" value="@currentSort" />
+    <input type="hidden" asp-for="ExistingPhotoPath" />
     <input type="hidden" asp-for="Id" />
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -83,10 +85,21 @@
                     </div>
                     <div class="col input-col">
                         <div class="picture-box">
-                            <input type="file" asp-for="Photo" class="form-control form-control-sm file-input">
+                            <input id="photoInput" type="file" asp-for="Photo" class="form-control form-control-sm file-input">
                         </div>
                     </div>
                     <div class="col-auto side-col"></div>
+                </div>
+
+                <div class="row mb-4 align-items-start">
+                    <div class="col-auto label-col">
+                        <label class="detail-label">Picture:</label>
+                    </div>
+                    <div class="col input-col">
+                        <div class="picture-box">
+                            <img id="photoPreview" src="@photoPath" asp-append-version="true" class="detail-picture">
+                        </div>
+                    </div>
                 </div>
 
                 <div asp-validation-summary="All"></div>
@@ -95,7 +108,11 @@
                 <div class="row justify-content-center mb-3">
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary btn-submit-green me-2">Submit</button>
-                        <button type="reset" class="btn btn-primary btn-reset-orange">Reset</button>
+                        @if (Model.Id == 0)
+                        {
+                            <button type="reset" class="btn btn-primary btn-reset-orange">Reset</button>
+                        }
+
                     </div>
                 </div>
 
@@ -112,4 +129,19 @@
         </div>
     </div>
 </form>
+
+@section Scripts {
+    <script>
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+
+        photoInput.addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                photoPreview.src = URL.createObjectURL(file);
+            }
+        });
+    </script>
+
+}
 

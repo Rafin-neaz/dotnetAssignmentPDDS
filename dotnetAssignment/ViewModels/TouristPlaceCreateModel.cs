@@ -17,5 +17,6 @@ namespace dotnetAssignment.ViewModels
 
         public IFormFile? Photo { get; set; }
         public string? Title { get; set; }
+        public string? ExistingPhotoPath { get; set; }
     }
 }

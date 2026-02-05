@@ -6,12 +6,17 @@
 
         public MockTouristPlaceRepository()
         {
-            _touristPlaces = new List<TouristPlace>() {
-                new TouristPlace() { Id = 1, Address="Cox's Bazar", Name="Cox bazar Sea Beach", Rating=3, Type=PlaceType.Beach},
-                new TouristPlace() { Id = 2, Address="Khulna", Name="SundarBan", Rating=4,Type=PlaceType.Landmark},
-                new TouristPlace() { Id = 3, Address="Lalbag", Name="Lalbag Fort", Rating=3, Type=PlaceType.Landmark},
-                new TouristPlace() { Id = 4, Address="Cumilla", Name="Mohasthan Gor", Rating=4, Type=PlaceType.Hills}
-            };
+            _touristPlaces = new List<TouristPlace>
+                {
+                    new TouristPlace { Id = 1, Name = "Cox's Bazar", Address = "Chittagong", Rating = 3, Type = PlaceType.Beach, PhotoPath = "noimage.jpg" },
+                    new TouristPlace { Id = 2, Name = "Sundarbans", Address = "Khulna", Rating = 2, Type = PlaceType.Beach, PhotoPath = "noimage.jpg" },
+                    new TouristPlace { Id = 3, Name = "Sajek Valley", Address = "Rangamati", Rating = 4, Type = PlaceType.Beach, PhotoPath = "noimage.jpg" },
+                    new TouristPlace { Id = 4, Name = "Saint Martin's Island", Address = "Cox's Bazar", Rating = 5, Type = PlaceType.Beach, PhotoPath = "noimage.jpg" },
+                    new TouristPlace { Id = 5, Name = "Kuakata Beach", Address = "Patuakhali", Rating = 1, Type = PlaceType.Beach, PhotoPath = "noimage.jpg" },
+                    new TouristPlace { Id = 6, Name = "Ratargul Swamp Forest", Address = "Sylhet", Rating = 4, Type = PlaceType.Beach, PhotoPath = "noimage.jpg" },
+                    new TouristPlace { Id = 7, Name = "Srimangal Tea Gardens", Address = "Moulvibazar", Rating = 3, Type = PlaceType.Beach, PhotoPath = "noimage.jpg" },
+                    new TouristPlace { Id = 8, Name = "Paharpur", Address = "Naogaon", Rating = 2, Type = PlaceType.Beach, PhotoPath = "noimage.jpg" }
+                };
         }
 
         public TouristPlace Get(long Id)

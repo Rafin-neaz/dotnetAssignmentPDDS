@@ -130,3 +130,102 @@
         color: #fff;
         text-decoration: none;
     }
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .sort-controls label {
+        margin: 0;
+        font-weight: 600;
+    }
+
+.search-box {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+}
+
+/* Sortable column header styles */
+.sortable-header {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 25px !important;
+}
+
+    .sortable-header:hover {
+        background-color: #f0f0f0;
+    }
+
+.sort-arrow {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #666;
+}
+
+    .sort-arrow.active {
+        color: #007bff;
+        font-weight: bold;
+    }
+
+.sort-arrow-up::before {
+    content: "▲";
+}
+
+.sort-arrow-down::before {
+    content: "▼";
+}
+
+.sort-arrow-none::before {
+    content: "⇅";
+    font-size: 14px;
+}
+
+/* Logo styling */
+.navbar-brand .logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Title styling */
+.navbar-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Search box styling */
+.navbar .search-box {
+    width: 250px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+    .navbar .search-box:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+/* Optional: hover effect on title */
+.navbar-brand:hover .navbar-title {
+    color: #007bff;
+}
+
+/* Make navbar sticky at top (optional) */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+

@@ -15,9 +15,5 @@ namespace dotnetAssignment.Models
         public PlaceType? Type { get; set; }
 
         public String? PhotoPath { get; set; }
-        
-        
-        //[RegularExpression("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/.", ErrorMessage="Please Provide correct email format")]
-        //public string email { get; set; }
     }
 }

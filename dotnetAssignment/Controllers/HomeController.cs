@@ -89,7 +89,14 @@ namespace dotnetAssignment.Controllers
                     }
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + placeCreate.Photo.FileName;
                     filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    placeCreate.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        placeCreate.Photo.CopyTo(stream); // writes file
+                    }
+                }
+                else if (placeCreate.ExistingPhotoPath != null)
+                {
+                    uniqueFileName = placeCreate.ExistingPhotoPath;
                 }
 
                 TouristPlace UpdatedTouristPlace = new TouristPlace()
@@ -127,18 +134,22 @@ namespace dotnetAssignment.Controllers
             var PhotoPath = "images/" + (place.PhotoPath ?? "noimage.jpg");
             var filePath = Path.Combine(webHostEnvironment.WebRootPath, PhotoPath);
 
-            using var stream = new FileStream(filePath, FileMode.Open);
-            var formFile = new FormFile(stream, 0, stream.Length, "Photo", Path.GetFileName(filePath));
-            TouristPlaceCreateModel touristPlaceCreateModel = new TouristPlaceCreateModel()
+            TouristPlaceCreateModel touristPlaceCreateModel = new TouristPlaceCreateModel();
+            using (var stream = new FileStream(filePath, FileMode.Open))
             {
-                Id = place.Id,
-                Name = place.Name,
-                Address = place.Address,
-                Rating = place.Rating,
-                Type = place.Type,
-                Photo = formFile,
-                Title = "Update Tourist Place"
-            };
+                var formFile = new FormFile(stream, 0, stream.Length, "Photo", Path.GetFileName(filePath));
+                touristPlaceCreateModel = new TouristPlaceCreateModel()
+                {
+                    Id = place.Id,
+                    Name = place.Name,
+                    Address = place.Address,
+                    Rating = place.Rating,
+                    Type = place.Type,
+                    Photo = formFile,
+                    Title = "Update Tourist Place",
+                    ExistingPhotoPath = place.PhotoPath
+                };
+            }
 
             // Store state for return
             ViewBag.CurrentSearch = searchString;
