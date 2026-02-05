@@ -119,7 +119,9 @@
                 <!-- Back Link -->
                 <div class="row">
                     <div class="col-12 text-end">
-                        <a asp-controller="Home" asp-action="Index" class="back-link">
+                        <a asp-controller="Home" asp-action="Index" class="back-link"
+                           asp-route-searchString="@currentSearch"
+                           asp-route-sortOrder="@currentSort">
                             Back to Tourist Place List
                         </a>
                     </div>
