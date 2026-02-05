@@ -21,8 +21,6 @@ namespace dotnetAssignment.Controllers
             {
                 case 404:
                     ViewBag.ErrorMessage = "The resource you requested could not be found";
-                    //ViewBag.Path = statusCodeResult.OriginalPath;
-                    //ViewBag.QS = statusCodeResult.OriginalQueryString;
                     _logger.LogWarning($"404 not found error occurred in {statusCodeResult.OriginalPath}" +
                         $"with query string {statusCodeResult.OriginalQueryString}");
                     break;
@@ -36,10 +34,6 @@ namespace dotnetAssignment.Controllers
         {
             var exceptionHandlerPathFeature =
         HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-
-            //ViewBag.ExceptionPath = exceptionHandlerPathFeature.Path;
-            //ViewBag.ExceptionMessage = exceptionHandlerPathFeature.Error.Message;
-            //ViewBag.StackTrace = exceptionHandlerPathFeature.Error.StackTrace;
             _logger.LogError($"An exception occurred in {exceptionHandlerPathFeature.Path} with message " +
                 $"{exceptionHandlerPathFeature.Error.Message} and statck trace is {exceptionHandlerPathFeature.Error.StackTrace}");
             return View("Error");
