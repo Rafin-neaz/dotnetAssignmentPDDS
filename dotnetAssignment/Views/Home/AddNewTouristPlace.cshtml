@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = Model.Title;
+    var currentSearch = ViewBag.CurrentSearch as string ?? "";
+    var currentSort = ViewBag.CurrentSort as string ?? "none";
 }
 
 
@@ -13,6 +15,9 @@
 
 
 <form asp-controller="home" asp-action="AddNewTouristPlace" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="searchString" value="@currentSearch" />
+    <input type="hidden" name="sortOrder" value="@currentSort" />
+    <input type="hidden" asp-for="Id" />
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-9">

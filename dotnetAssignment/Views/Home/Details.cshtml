@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Details of Tourist Place";
+    var currentSearch = ViewBag.CurrentSearch as string ?? "";
+    var currentSort = ViewBag.CurrentSort as string ?? "none";
     var photoPath = Url.Content("~/images/" + (Model.TouristPlace.PhotoPath ?? "noimage.jpg"));
 }
 
@@ -74,7 +76,10 @@
             <!-- Back Link -->
             <div class="row mt-3">
                 <div class="col-12 text-end">
-                    <a asp-controller="home" asp-action="index" class="back-link">Back to Tourist Place List</a>
+                    <a asp-controller="home" asp-action="index" 
+                       asp-route-searchString="@currentSearch"
+                       asp-route-sortOrder="@currentSort" 
+                       class="back-link">Back to Tourist Place List</a>
                 </div>
             </div>
 

@@ -1,26 +1,91 @@
 ﻿@model AllTouristPlaces
 @{
     ViewBag.Title = "Tourist Place List";
+    var currentSearch = ViewBag.CurrentSearch as string ?? "";
+    var currentSort = ViewBag.CurrentSort as string ?? "none";
 }
 
 @section StylesAndTitle {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tourist Place List</title>
     <link href="~/css/Index.css" rel="stylesheet" />
+    <style>
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .sort-controls label {
+                margin: 0;
+                font-weight: 600;
+            }
+
+        .search-box {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+        }
+
+        /* Sortable column header styles */
+        .sortable-header {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-right: 25px !important;
+        }
+
+            .sortable-header:hover {
+                background-color: #f0f0f0;
+            }
+
+        .sort-arrow {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #666;
+        }
+
+            .sort-arrow.active {
+                color: #007bff;
+                font-weight: bold;
+            }
+
+        .sort-arrow-up::before {
+            content: "▲";
+        }
+
+        .sort-arrow-down::before {
+            content: "▼";
+        }
+
+        .sort-arrow-none::before {
+            content: "⇅";
+            font-size: 14px;
+        }
+    </style>
 }
 
 <div class="container-fluid px-4 pt-4">
 
     <!-- Search Box -->
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-auto">
-            <form asp-controller="Home" asp-action="Index" method="get">
-                <p>
-                    <label>Name: <input type="text" name="searchString" value="@Context.Request.Query["searchString"]" /></label>
-                    <input type="submit" value="Filter"  />
-                </p>
-            </form>
-
+            <div class="d-flex gap-3 align-items-center">
+                <!-- Search Box (Search-as-you-type) -->
+                <div>
+                    <label for="searchInput">Name: </label>
+                    <input type="text"
+                           id="searchInput"
+                           name="searchString"
+                           value="@currentSearch"
+                           class="search-box"
+                           placeholder="Type to search..." />
+                </div>
+            </div>
         </div>
     </div>
 
@@ -33,32 +98,58 @@
                         <tr>
                             <th>NAME</th>
                             <th>ADDRESS</th>
-                            <th>RATING</th>
+                            <th class="sortable-header" id="ratingHeader">
+                                RATING
+                                <span class="sort-arrow @(currentSort == "none" ? "sort-arrow-none" : currentSort == "asc" ? "sort-arrow-up active" : "sort-arrow-down active")"></span>
+                            </th>
                             <th>PICTURE</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var touristPlace in @Model.touristPlaces)
+                        @if (Model.touristPlaces.Any())
                         {
-                            
-                            var photoPath = Url.Content("~/images/" + (touristPlace.PhotoPath ?? "noimage.jpg"));
-                            
+                            @foreach (var touristPlace in @Model.touristPlaces)
+                            {
+                                var photoPath = Url.Content("~/images/" + (touristPlace.PhotoPath ?? "noimage.jpg"));
+
+                                <tr>
+                                    <td>@touristPlace.Name</td>
+                                    <td>@touristPlace.Address</td>
+                                    <td>@touristPlace.Rating</td>
+                                    <td class="pic-td">
+                                        <img src="@photoPath" asp-append-version="true" alt="Picture" class="place-picture">
+                                    </td>
+                                    <td class="action-td">
+                                        <a asp-controller="Home"
+                                           asp-action="UpdateTouristPlace"
+                                           asp-route-id="@touristPlace.Id"
+                                           asp-route-searchString="@currentSearch"
+                                           asp-route-sortOrder="@currentSort"
+                                           class="btn btn-update">Update</a>
+                                        <a asp-controller="Home"
+                                           asp-action="Delete"
+                                           asp-route-id="@touristPlace.Id"
+                                           asp-route-searchString="@currentSearch"
+                                           asp-route-sortOrder="@currentSort"
+                                           class="btn btn-delete"
+                                           onclick="return confirm('Are you sure you want to delete this place?');">Delete</a>
+                                        <a asp-controller="Home"
+                                           asp-action="Details"
+                                           asp-route-id="@touristPlace.Id"
+                                           asp-route-searchString="@currentSearch"
+                                           asp-route-sortOrder="@currentSort"
+                                           class="btn btn-create">Details</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
                             <tr>
-                                <td>@touristPlace.Name</td>
-                                <td>@touristPlace.Address</td>
-                                <td>@touristPlace.Rating</td>
-                                <td class="pic-td">
-                                    <img src="@photoPath" asp-append-version="true" alt="Picture" class="place-picture">
-                                </td>
-                                <td class="action-td">
-                                    <a asp-controller="Home" asp-action="UpdateTouristPlace" asp-route-id="@touristPlace.Id" class="btn btn-update">Update</a>
-                                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@touristPlace.Id" class="btn btn-delete">Delete</a>
-                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@touristPlace.Id" class="btn btn-create">Details</a>
-                                </td>
+                                <td colspan="5" class="text-center">No tourist places found.</td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
             </div>
@@ -68,9 +159,69 @@
     <!-- Create New Tourist Place -->
     <div class="row mt-3">
         <div class="col-auto">
-            <a asp-controller="Home" asp-action="AddNewTouristPlace" class="btn btn-create">Create New Tourist Place</a>
+            <a asp-controller="Home"
+               asp-action="AddNewTouristPlace"
+               asp-route-searchString="@currentSearch"
+               asp-route-sortOrder="@currentSort"
+               class="btn btn-create">Create New Tourist Place</a>
         </div>
     </div>
 
 </div>
 
+@section Scripts {
+    <script>
+        // Current state
+        let currentSearch = '@currentSearch';
+        let currentSort = '@currentSort';
+
+        // Search-as-you-type functionality
+        let searchTimeout;
+        const searchInput = document.getElementById('searchInput');
+        const ratingHeader = document.getElementById('ratingHeader');
+
+        // Navigate with current parameters
+        function navigateWithParams(search, sort) {
+            const url = new URL(window.location.origin + '@Url.Action("Index", "Home")');
+            if (search) {
+                url.searchParams.set('searchString', search);
+            }
+            if (sort && sort !== 'none') {
+                url.searchParams.set('sortOrder', sort);
+            }
+            window.location.href = url.toString();
+        }
+
+        // Search input event listener with debounce
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(function() {
+                navigateWithParams(searchInput.value, currentSort);
+            }, 500); // 500ms debounce
+        });
+
+        // Allow immediate search on Enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                clearTimeout(searchTimeout);
+                navigateWithParams(searchInput.value, currentSort);
+            }
+        });
+
+        // Rating column header click for sorting
+        ratingHeader.addEventListener('click', function() {
+            let newSort;
+
+            // Cycle through: none → asc → desc → none
+            if (currentSort === 'none' || currentSort === '') {
+                newSort = 'asc';
+            } else if (currentSort === 'asc') {
+                newSort = 'desc';
+            } else {
+                newSort = 'none';
+            }
+
+            navigateWithParams(currentSearch, newSort);
+        });
+    </script>
+}

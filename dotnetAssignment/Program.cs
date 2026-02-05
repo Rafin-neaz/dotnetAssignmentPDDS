@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddXmlSerializerFormatters();
-builder.Services.AddScoped<ITouristPlaceRepository, MockTouristPlaceRepository>();
+builder.Services.AddSingleton<ITouristPlaceRepository, MockTouristPlaceRepository>();
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
