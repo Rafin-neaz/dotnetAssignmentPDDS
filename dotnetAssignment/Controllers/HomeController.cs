@@ -15,7 +15,7 @@ namespace dotnetAssignment.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public ViewResult Index(string? searchString, string? sortOrder)
+        public IActionResult Index(string? searchString, string? sortOrder)
         {
             var places = _touristPlaceRepository.GettAll();
 
@@ -43,12 +43,17 @@ namespace dotnetAssignment.Controllers
 
             ViewBag.CurrentSearch = searchString;
             ViewBag.CurrentSort = sortOrder;
-
-            return View(new AllTouristPlaces
+            var model = new AllTouristPlaces
             {
                 Title = "All tourist places",
                 touristPlaces = places
-            });
+            };
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("_TouristPlaceTableDataPartialView", model);
+            }
+
+            return View(model);
         }
 
         [HttpGet]
@@ -156,7 +161,7 @@ namespace dotnetAssignment.Controllers
         public ViewResult Details(long id, string? searchString, string? sortOrder)
         {
             TouristPlace existingPlace = _touristPlaceRepository.Get(id);
-            if (existingPlace == null)
+            if (existingPlace == null || existingPlace.Id == 0)
             {
                 Response.StatusCode = 404;
                 return View("NotFound", id);
