@@ -11,8 +11,8 @@ using dotnetAssignment.Models;
 namespace dotnetAssignment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260202095628_PhotoPathColumn")]
-    partial class PhotoPathColumn
+    [Migration("20260216101246_Initial_migration")]
+    partial class Initial_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
