@@ -1,3 +1,4 @@
+using dotnetAssignment.Mapper;
 using dotnetAssignment.Models;
 using dotnetAssignment.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 );
 builder.Services.AddControllersWithViews().AddXmlSerializerFormatters();
 builder.Services.AddScoped<ITouristPlaceRepository, TouristPlaceRepository>();
+builder.Services.AddAutoMapper(typeof(ProfileMapping));
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {

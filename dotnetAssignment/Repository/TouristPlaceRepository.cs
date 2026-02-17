@@ -1,4 +1,6 @@
-﻿using dotnetAssignment.Models;
+﻿using AutoMapper;
+using dotnetAssignment.Models;
+using dotnetAssignment.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,10 +11,12 @@ namespace dotnetAssignment.Repository
     public class TouristPlaceRepository : ITouristPlaceRepository
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public TouristPlaceRepository(AppDbContext context)
+        public TouristPlaceRepository(AppDbContext context, IMapper mapper)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            this._mapper = mapper;
         }
 
         // 1. Asynchronous Create
@@ -58,6 +62,9 @@ namespace dotnetAssignment.Repository
         public async Task<TouristPlace> Update(TouristPlace updatedPlace)
         {
             if (updatedPlace == null) throw new ArgumentNullException(nameof(updatedPlace));
+
+            TouristPlaceUpdateViewModel updatedModel = _mapper.Map<TouristPlaceUpdateViewModel>(updatedPlace);
+            updatedPlace = _mapper.Map<TouristPlace>(updatedPlace);
 
             // Attach the entity and mark it as modified
             _context.Entry(updatedPlace).State = EntityState.Modified;
