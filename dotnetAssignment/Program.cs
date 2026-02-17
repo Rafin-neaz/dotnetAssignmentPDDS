@@ -1,4 +1,5 @@
 using dotnetAssignment.Models;
+using dotnetAssignment.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

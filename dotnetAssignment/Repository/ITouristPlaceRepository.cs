@@ -1,4 +1,6 @@
-﻿namespace dotnetAssignment.Models
+﻿using dotnetAssignment.Models;
+
+namespace dotnetAssignment.Repository
 {
     public interface ITouristPlaceRepository
     {

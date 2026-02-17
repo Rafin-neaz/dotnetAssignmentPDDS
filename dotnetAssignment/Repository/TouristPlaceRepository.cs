@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using dotnetAssignment.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace dotnetAssignment.Models
+namespace dotnetAssignment.Repository
 {
     public class TouristPlaceRepository : ITouristPlaceRepository
     {
