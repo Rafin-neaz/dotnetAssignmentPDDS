@@ -2,10 +2,10 @@
 {
     public interface ITouristPlaceRepository
     {
-        TouristPlace Get(long id);
-        List<TouristPlace> GettAll();
-        TouristPlace CreateNew(TouristPlace place);
-        TouristPlace Update(TouristPlace place);
-        TouristPlace Delete(long id);
+        Task<TouristPlace> Get(long id);
+        Task<List<TouristPlace>> GetAll();
+        Task<TouristPlace> CreateNew(TouristPlace place);
+        Task<TouristPlace> Update(TouristPlace place);
+        Task<TouristPlace> Delete(long id);
     }
 }

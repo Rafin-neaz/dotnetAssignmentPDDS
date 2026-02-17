@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace dotnetAssignment.Models
 {
@@ -11,61 +14,77 @@ namespace dotnetAssignment.Models
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public TouristPlace CreateNew(TouristPlace place)
+        // 1. Asynchronous Create
+        public async Task<TouristPlace> CreateNew(TouristPlace place)
         {
-            if (place == null)
-                throw new ArgumentNullException(nameof(place));
+            if (place == null) throw new ArgumentNullException(nameof(place));
 
-            _context.Tourists.Add(place);
-            _context.SaveChanges();
+            await _context.Tourists.AddAsync(place);
+            await _context.SaveChangesAsync();
 
             return place;
         }
 
-        public TouristPlace Delete(long id)
+        // 2. Asynchronous Delete with explicit null handling
+        public async Task<TouristPlace> Delete(long id)
         {
-            var place = _context.Tourists.Find(id);
-            if (place == null)
-                return null;
+            var place = await _context.Tourists.FindAsync(id);
+            if (place == null) return null;
 
             _context.Tourists.Remove(place);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return place;
         }
 
-        public TouristPlace Get(long id)
+        // 3. Optimized Read-only Get
+        public async Task<TouristPlace> Get(long id)
         {
-            return _context.Tourists
-                           .AsNoTracking()
-                           .FirstOrDefault(x => x.Id == id);
+            return await _context.Tourists
+                                 .AsNoTracking()
+                                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<TouristPlace> GettAll()
+        // 4. Fixed naming (GetAll) and Asynchronous List
+        public async Task<List<TouristPlace>> GetAll()
         {
-            return _context.Tourists
-                           .AsNoTracking()
-                           .ToList();
+            return await _context.Tourists
+                                 .AsNoTracking()
+                                 .ToListAsync();
         }
 
-        public TouristPlace Update(TouristPlace updatedPlace)
+        // 5. Streamlined Update with Concurrency Handling
+        public async Task<TouristPlace> Update(TouristPlace updatedPlace)
         {
-            if (updatedPlace == null)
-                throw new ArgumentNullException(nameof(updatedPlace));
+            if (updatedPlace == null) throw new ArgumentNullException(nameof(updatedPlace));
 
-            var existingPlace = _context.Tourists.Find(updatedPlace.Id);
-            if (existingPlace == null)
-                return null;
+            // Attach the entity and mark it as modified
+            _context.Entry(updatedPlace).State = EntityState.Modified;
 
-            existingPlace.Name = updatedPlace.Name;
-            existingPlace.Address = updatedPlace.Address;
-            existingPlace.Rating = updatedPlace.Rating;
-            existingPlace.Type = updatedPlace.Type;
-            existingPlace.PhotoPath = updatedPlace.PhotoPath;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Check if the record actually exists in the DB
+                if (!await TouristPlaceExists(updatedPlace.Id))
+                {
+                    return null;
+                }
+                else
+                {
+                    throw; // Re-throw if it's a different DB error
+                }
+            }
 
-            _context.SaveChanges();
+            return updatedPlace;
+        }
 
-            return existingPlace;
+        // Helper method for existence checks
+        private async Task<bool> TouristPlaceExists(long id)
+        {
+            return await _context.Tourists.AnyAsync(e => e.Id == id);
         }
     }
 }

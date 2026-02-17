@@ -15,9 +15,9 @@ namespace dotnetAssignment.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index(string? searchString, string? sortOrder)
+        public async Task<IActionResult> Index(string? searchString, string? sortOrder)
         {
-            var places = _touristPlaceRepository.GettAll();
+            var places = await _touristPlaceRepository.GetAll();
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
@@ -69,14 +69,14 @@ namespace dotnetAssignment.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddNewTouristPlace(TouristPlaceCreateModel placeCreate, long? Id, string? searchString, string? sortOrder)
+        public async Task<IActionResult> AddNewTouristPlace(TouristPlaceCreateModel placeCreate, long? Id, string? searchString, string? sortOrder)
         {
             if (ModelState.IsValid)
             {
                 TouristPlace PlaceFromDb = null;
                 if (Id > 0)
                 {
-                    PlaceFromDb = _touristPlaceRepository.Get(Id.Value);
+                    PlaceFromDb = await _touristPlaceRepository.Get(Id.Value);
                 }
                 string filePath = null;
                 string uniqueFileName = null;
@@ -110,11 +110,11 @@ namespace dotnetAssignment.Controllers
                 };
                 if (PlaceFromDb != null)
                 {
-                    UpdatedTouristPlace = _touristPlaceRepository.Update(UpdatedTouristPlace);
+                    UpdatedTouristPlace = await _touristPlaceRepository.Update(UpdatedTouristPlace);
                 }
                 else
                 {
-                    UpdatedTouristPlace = _touristPlaceRepository.CreateNew(UpdatedTouristPlace);
+                    UpdatedTouristPlace = await _touristPlaceRepository.CreateNew(UpdatedTouristPlace);
                 }
 
                 return RedirectToAction("details", new { id = UpdatedTouristPlace.Id, searchString = searchString, sortOrder = sortOrder });
@@ -127,9 +127,9 @@ namespace dotnetAssignment.Controllers
         }
 
         [HttpGet]
-        public ViewResult UpdateTouristPlace(long id, string? searchString, string? sortOrder)
+        public async Task<ViewResult> UpdateTouristPlace(long id, string? searchString, string? sortOrder)
         {
-            TouristPlace place = _touristPlaceRepository.Get(id);
+            TouristPlace place = await _touristPlaceRepository.Get(id);
             var PhotoPath = "images/" + (place.PhotoPath ?? "noimage.jpg");
             var filePath = Path.Combine(webHostEnvironment.WebRootPath, PhotoPath);
 
@@ -158,9 +158,9 @@ namespace dotnetAssignment.Controllers
             return View("~/Views/Home/AddNewTouristPlace.cshtml", touristPlaceCreateModel);
         }
 
-        public ViewResult Details(long id, string? searchString, string? sortOrder)
+        public async Task<ViewResult> Details(long id, string? searchString, string? sortOrder)
         {
-            TouristPlace existingPlace = _touristPlaceRepository.Get(id);
+            TouristPlace existingPlace = await _touristPlaceRepository.Get(id);
             if (existingPlace == null || existingPlace.Id == 0)
             {
                 Response.StatusCode = 404;
@@ -169,7 +169,7 @@ namespace dotnetAssignment.Controllers
             TouristPlaceViewModel model = new TouristPlaceViewModel()
             {
                 Title = "Tourist Place Details",
-                TouristPlace = _touristPlaceRepository.Get(id)
+                TouristPlace = await _touristPlaceRepository.Get(id)
             };
 
             ViewBag.CurrentSearch = searchString;
